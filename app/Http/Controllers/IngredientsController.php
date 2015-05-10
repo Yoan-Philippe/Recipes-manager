@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use App\Ingredient;
+use App\Recipe;
 use App\IngredientCategory;
 use Request;
 use Session;
@@ -68,20 +69,35 @@ class IngredientsController extends Controller {
 	{
 		$ingredient = Ingredient::find($id);
 		$ingredientCategories = IngredientCategory::all();
+		$recipes = Recipe::all();
 
-		return view('Ingredients.edit')->with('ingredient',$ingredient)->with('ingredientCategories',$ingredientCategories);
+		$relatedIds = $ingredient->recipes()->getRelatedIds();
+
+		return view('Ingredients.edit')->with('ingredient',$ingredient)->with('ingredientCategories',$ingredientCategories)
+			->with('recipes',$recipes)->with('relatedIds',$relatedIds);
 	}
 
 	public function edit()
 	{
 		if (Request::has('id'))
 		{
+			//Get value that are checked
+			$nbrRecipes = Recipe::count();
+			$arrIdChecked = array();
+			for($cpt=0; $cpt<$nbrRecipes; $cpt++){
+				if(Request::input('recipe_' . $cpt)!='')
+				$arrIdChecked[] = Request::input('recipe_' . $cpt);
+			}
+
+
 			$id = Request::input('id');
 			$ingredient = Ingredient::find($id);
 
 		    $name = Request::input('ingredient');
 		    $quantity = Request::input('quantity');
 		    $catId = Request::input('ingredientCategory');
+
+		    $ingredient->recipes()->sync($arrIdChecked);
 
 			$ingredient->name = $name;
 			$ingredient->quantity = $quantity;
@@ -93,8 +109,7 @@ class IngredientsController extends Controller {
 		}
 		else{
 			return redirect('ingredients');
-		}
-	    
+		}   
 	}
 
 	public function delete($id)

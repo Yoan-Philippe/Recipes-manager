@@ -24,6 +24,7 @@ Route::post('ingredients/add', 'IngredientsController@add');
 //Route concernant les recettes
 Route::get('/recipes', 'RecipesController@index');
 Route::get('recipes/delete/{id}', 'RecipesController@delete');
+Route::get('recipes/{id}', 'RecipesController@view');
 Route::get('recipes/edit/{id}', 'RecipesController@showEdit');
 Route::post('recipes/edit', 'RecipesController@edit');
 Route::get('recipes/add', 'RecipesController@add');

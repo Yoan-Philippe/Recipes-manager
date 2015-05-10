@@ -1,6 +1,8 @@
 <?php namespace App\Http\Controllers;
 
 use App\Recipe;
+use App\Ingredient;
+use App\Moment;
 use Request;
 use Session;
 
@@ -39,6 +41,12 @@ class RecipesController extends Controller {
 		return view('Recipes.recipes')->with('recipes',$recipes);
 	}
 
+	public function view($id)
+	{
+		$recipe = Recipe::find($id);
+		return view('Recipes.view')->with('recipe',$recipe);
+	}
+
 	public function add()
 	{
 		if (Request::has('name'))
@@ -65,20 +73,35 @@ class RecipesController extends Controller {
 	public function showEdit($id)
 	{
 		$recipe = Recipe::find($id);
+		$ingredients = Ingredient::all();
+		$moments = Moment::all();
 
-		return view('Recipes.edit')->with('recipe',$recipe);
+		$relatedIds = $recipe->moments()->getRelatedIds();
+
+		return view('Recipes.edit')->with('recipe',$recipe)->with('ingredients',$ingredients)->with('moments',$moments)
+			->with('relatedIds',$relatedIds);
 	}
 
 	public function edit()
 	{
 		if (Request::has('id'))
 		{
+			//Get value that are checked
+			$nbrMoments = Moment::count();
+			$arrIdChecked = array();
+			for($cpt=0; $cpt<$nbrMoments; $cpt++){
+				if(Request::input('moment_' . $cpt)!='')
+				$arrIdChecked[] = Request::input('moment_' . $cpt);
+			}
+
 			$id = Request::input('id');
 			$recipe = Recipe::find($id);
 
 		    $name = Request::input('name');
 			$prep_time = Request::input('prep_time');
 			$cook_time = Request::input('cook_time');
+
+			$recipe->moments()->sync($arrIdChecked);
 
 			$recipe->name = $name;
 			$recipe->prep_time = $prep_time;

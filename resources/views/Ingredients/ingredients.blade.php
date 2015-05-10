@@ -42,15 +42,6 @@
 							echo '<p>' . $value->name . ' (' . $value->quantity . ') - <a href="ingredients/delete/' . $value->id . '">Delete</a> - <a href="ingredients/edit/' . $value->id . '">Edit</a></p>';
 						}
 						echo '<hr />';
-					}
-
-					//Show ingredients that are not associated with categories
-					echo '<h3>Autres</h3>';
-					foreach ($ingredients as $key => $value) {
-						if($value->ingredient_category_id==0){
-							
-							echo '<p>' . $value->name . ' (' . $value->quantity . ') - <a href="ingredients/delete/' . $value->id . '">Delete</a> - <a href="ingredients/edit/' . $value->id . '">Edit</a></p>';
-						}
 					} ?>
 				</div>
 			</div>

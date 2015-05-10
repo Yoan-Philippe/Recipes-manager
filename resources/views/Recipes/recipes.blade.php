@@ -21,7 +21,14 @@
 					<h2>Your recipes !</h2>
 					<?php 
 					foreach ($recipes as $key => $value) {
-						echo '<p>' . $value->name . ' | Préparation: ' . $value->prep_time . 'min + Cuisson: ' . $value->cook_time . 'min - <a href="recipes/edit/' . $value->id . '">Edit</a><br /><a href="recipes/delete/' . $value->id . '">Delete</a></p>';
+						$totalTime = $value->prep_time + $value->cook_time;
+						if($totalTime>60)
+						{
+							$totalTime = round($totalTime/60,2) . 'h';
+						}
+						else
+						$totalTime = $totalTime . 'min';
+						echo '<p>' . $value->name . ' (' . $totalTime . ') - <a href="recipes/' . $value->id . '">View</a> - <a href="recipes/edit/' . $value->id . '">Edit</a><br /><a href="recipes/delete/' . $value->id . '">Delete</a></p>';
 					} ?>	
 
 					<h2>Add your receipe !</h2>

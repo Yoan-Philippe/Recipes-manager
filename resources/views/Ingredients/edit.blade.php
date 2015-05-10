@@ -27,6 +27,21 @@
 							}
 						?>
 						</select>
+						<hr/>
+						<h3>Recettes</h3>
+						<?php
+						$cpt = 0;
+							foreach ($recipes as $value) { ?>
+								<p><label for="recipe_<?php echo $cpt; ?>"><?php echo $value->name; ?></label>
+								<?php 
+								if(in_array($value->id, $relatedIds))
+								$checked='checked=checked';
+								else
+								$checked = '';
+								?>
+								<input type="checkbox" {{ $checked }} value="<?php echo $value->id; ?>" name="recipe_<?php echo $cpt; ?>" id="recipe_<?php echo $cpt; ?>" /></p>
+							<?php 
+							$cpt++; } ?>
 						<input type="submit" name="btSubmit" value="Save" />
 					</form>
 				</div>
