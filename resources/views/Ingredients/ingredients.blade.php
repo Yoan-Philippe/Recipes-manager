@@ -5,7 +5,7 @@
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-default">
-				<div class="panel-heading">Ingredients</div>
+				<div class="panel-heading">Ingredients <div style="float:right;" id="txt"></div></div>
 
 				<div class="panel-body">
 				<?php
@@ -18,7 +18,7 @@
 					<h2>Your ingredient !</h2>
 					<?php 
 					foreach ($ingredients as $key => $value) {
-						echo '<p>' . $value->name . ' (' . $value->quantity . ')<br /><a href="ingredients/delete/' . $value->id . '">Delete</a></p>';
+						echo '<p>' . $value->name . ' (' . $value->quantity . ') - <a href="ingredients/delete/' . $value->id . '">Delete</a> - <a href="ingredients/edit/' . $value->id . '">Edit</a></p>';
 					} ?>	
 
 					<h2>Add your ingredient !</h2>
@@ -32,4 +32,5 @@
 		</div>
 	</div>
 </div>
+<script src="{{ asset('/js/time.js') }}"></script>
 @endsection

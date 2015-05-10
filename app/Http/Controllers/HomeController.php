@@ -48,8 +48,10 @@ class HomeController extends Controller {
 			$min = $value->min;
 			$max = $value->max;
 
-			if($currentHour>$min&&$currentHour<$max)
-			$momentOfDay = $name;
+			if($currentHour>=$min&&$currentHour<=$max)
+			{
+				$momentOfDay = $name;	
+			}
 		}
 		return view('home')->with('momentOfDay',$momentOfDay);
 	}

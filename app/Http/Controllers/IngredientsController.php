@@ -36,7 +36,7 @@ class IngredientsController extends Controller {
 	{
 		$ingredients = Ingredient::all();
 
-		return view('ingredients')->with('ingredients',$ingredients);
+		return view('Ingredients.ingredients')->with('ingredients',$ingredients);
 	}
 
 	public function add()
@@ -58,6 +58,36 @@ class IngredientsController extends Controller {
 		{
 			return redirect('ingredients');
 		}
+	}
+
+	public function showEdit($id)
+	{
+		$ingredient = Ingredient::find($id);
+
+		return view('Ingredients.edit')->with('ingredient',$ingredient);
+	}
+
+	public function edit()
+	{
+		if (Request::has('id'))
+		{
+			$id = Request::input('id');
+			$ingredient = Ingredient::find($id);
+
+		    $name = Request::input('ingredient');
+		    $quantity = Request::input('quantity');
+
+			$ingredient->name = $name;
+			$ingredient->quantity = $quantity;
+			$ingredient->save();
+
+			Session::flash('edited', 'Cet ingrédient a bien été enregistré.');
+			return redirect('ingredients');
+		}
+		else{
+			return redirect('ingredients');
+		}
+	    
 	}
 
 	public function delete($id)

@@ -16,12 +16,16 @@ Route::get('/', 'HomeController@index');
 //Route concernant les ingrédients
 Route::get('/ingredients', 'IngredientsController@index');
 Route::get('ingredients/delete/{id}', 'IngredientsController@delete');
+Route::get('ingredients/edit/{id}', 'IngredientsController@showEdit');
+Route::post('ingredients/edit', 'IngredientsController@edit');
 Route::get('ingredients/add', 'IngredientsController@add');
 Route::post('ingredients/add', 'IngredientsController@add');
 
 //Route concernant les recettes
 Route::get('/recipes', 'RecipesController@index');
 Route::get('recipes/delete/{id}', 'RecipesController@delete');
+Route::get('recipes/edit/{id}', 'RecipesController@showEdit');
+Route::post('recipes/edit', 'RecipesController@edit');
 Route::get('recipes/add', 'RecipesController@add');
 Route::post('recipes/add', 'RecipesController@add');
 

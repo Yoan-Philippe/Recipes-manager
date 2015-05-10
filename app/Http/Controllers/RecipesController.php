@@ -36,7 +36,7 @@ class RecipesController extends Controller {
 	{
 		$recipes = Recipe::all();
 
-		return view('recipes')->with('recipes',$recipes);
+		return view('Recipes.recipes')->with('recipes',$recipes);
 	}
 
 	public function add()
@@ -62,10 +62,42 @@ class RecipesController extends Controller {
 		}
 	}
 
+	public function showEdit($id)
+	{
+		$recipe = Recipe::find($id);
+
+		return view('Recipes.edit')->with('recipe',$recipe);
+	}
+
+	public function edit()
+	{
+		if (Request::has('id'))
+		{
+			$id = Request::input('id');
+			$recipe = Recipe::find($id);
+
+		    $name = Request::input('name');
+			$prep_time = Request::input('prep_time');
+			$cook_time = Request::input('cook_time');
+
+			$recipe->name = $name;
+			$recipe->prep_time = $prep_time;
+			$recipe->cook_time = $cook_time;
+			$recipe->save();
+
+			Session::flash('edited', 'Cette recette a bien été enregistrée.');
+			return redirect('recipes');
+		}
+		else{
+			return redirect('recipes');
+		}
+	    
+	}
+
 	public function delete($id)
 	{
-		$recipes = Recipe::find($id);
-		$recipes->delete();
+		$recipe = Recipe::find($id);
+		$recipe->delete();
 
 		Session::flash('deleted', 'Cette recette vient d\'être supprimée.');
 		return redirect('recipes');
