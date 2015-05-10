@@ -14,6 +14,19 @@
 						<input type="hidden" value="<?php echo $ingredient->id; ?>" name="id" />
 						<input type="text" value="<?php echo $ingredient->name; ?>" name="ingredient" placeholder="Name" />
 						<input type="text" value="<?php echo $ingredient->quantity; ?>" name="quantity" placeholder="Quantity" />
+						<select name="ingredientCategory" id="ingredientCategory">
+						<?php 
+							$catId = $ingredient->ingredient_category_id;
+							foreach ($ingredientCategories as $key => $value) {
+									if($value->id==$catId)
+									$selected = 'selected="selected"';
+									else
+									$selected = '';
+
+									echo '<option ' . $selected . ' value="' . $value->id . '">' . $value->name . '</option>';
+							}
+						?>
+						</select>
 						<input type="submit" name="btSubmit" value="Save" />
 					</form>
 				</div>

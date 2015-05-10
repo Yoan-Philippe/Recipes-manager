@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use App\Ingredient;
+use App\IngredientCategory;
 use Request;
 use Session;
 
@@ -35,8 +36,9 @@ class IngredientsController extends Controller {
 	public function index()
 	{
 		$ingredients = Ingredient::all();
+		$ingredientCategories = IngredientCategory::all();
 
-		return view('Ingredients.ingredients')->with('ingredients',$ingredients);
+		return view('Ingredients.ingredients')->with('ingredients',$ingredients)->with('ingredientCategories',$ingredientCategories);
 	}
 
 	public function add()
@@ -45,10 +47,12 @@ class IngredientsController extends Controller {
 		{
 		    $name = Request::input('ingredient');
 			$quantity = Request::input('quantity');
+			$catId = Request::input('ingredientCategory');
 			
 			$ingredient = new Ingredient;
 			$ingredient->name = $name;
 			$ingredient->quantity = $quantity;
+			$ingredient->ingredient_category_id = $catId;
 			$ingredient->save();
 
 			Session::flash('added', 'Un nouvel ingrédient vient d\'être ajouté.');
@@ -63,8 +67,9 @@ class IngredientsController extends Controller {
 	public function showEdit($id)
 	{
 		$ingredient = Ingredient::find($id);
+		$ingredientCategories = IngredientCategory::all();
 
-		return view('Ingredients.edit')->with('ingredient',$ingredient);
+		return view('Ingredients.edit')->with('ingredient',$ingredient)->with('ingredientCategories',$ingredientCategories);
 	}
 
 	public function edit()
@@ -76,9 +81,11 @@ class IngredientsController extends Controller {
 
 		    $name = Request::input('ingredient');
 		    $quantity = Request::input('quantity');
+		    $catId = Request::input('ingredientCategory');
 
 			$ingredient->name = $name;
 			$ingredient->quantity = $quantity;
+			$ingredient->ingredient_category_id = $catId;
 			$ingredient->save();
 
 			Session::flash('edited', 'Cet ingrédient a bien été enregistré.');
