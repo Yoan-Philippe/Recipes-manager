@@ -1,5 +1,10 @@
 <?php namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Moment;
+
+
+
 class HomeController extends Controller {
 
 	/*
@@ -31,7 +36,22 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
-		return view('home');
+		$dateNow = Carbon::now('America/Montreal');
+		$dt = Carbon::parse($dateNow);
+		$currentHour = $dt->hour; 
+
+		$moments = Moment::all();
+		$momentOfDay = '';
+
+		foreach ($moments as $value) {
+			$name = $value->name;
+			$min = $value->min;
+			$max = $value->max;
+
+			if($currentHour>$min&&$currentHour<$max)
+			$momentOfDay = $name;
+		}
+		return view('home')->with('momentOfDay',$momentOfDay);
 	}
 
 }
