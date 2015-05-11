@@ -5,7 +5,7 @@
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-default">
-				<div class="panel-heading">Ingredients <div style="float:right;" id="txt"></div></div>
+				<div class="panel-heading">Ingredients <div id="txt"></div></div>
 
 				<div class="panel-body">
 					<?php
@@ -18,15 +18,16 @@
 					if (Session::has('edited'))
 					echo '<p style="color:green;">' . Session::get('edited') . '</p>';
 					?>
-					<button style="float:right;" id="addIngredient">Add your ingredient !</button>
+					<button id="addIngredient">Ajoute un ingredient !</button>
 					<form id="addIngredientForm" method="post" action="{{ action('IngredientsController@add') }}" accept-charset="UTF-8">
 						<input type="text" name="ingredient" placeholder="Name" />
 						<input type="text" name="quantity" placeholder="Quantity" />
 						<select name="ingredientCategory" id="ingredientCategory">
 						<?php 
-							foreach ($ingredientCategories as $key => $value) {
-										echo '<option value="' . $value->id . '">' . $value->name . '</option>';
-									}
+							foreach ($ingredientCategories as $key => $value) 
+							{
+								echo '<option value="' . $value->id . '">' . $value->name . '</option>';
+							}
 						?>
 						</select>
 						<input type="submit" name="btSubmit" value="Ajouter" />

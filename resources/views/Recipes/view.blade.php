@@ -5,7 +5,7 @@
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-default">
-				<div class="panel-heading">Fiche de la recette<div style="float:right;" id="txt"></div></div>
+				<div class="panel-heading">Fiche de la recette<div id="txt"></div></div>
 
 				<div class="panel-body">
 					<h2>{{ $recipe->name }}</h2>

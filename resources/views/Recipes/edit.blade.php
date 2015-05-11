@@ -5,7 +5,7 @@
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-default">
-				<div class="panel-heading">Edit Recipe <div style="float:right;" id="txt"></div></div>
+				<div class="panel-heading">Edit Recipe <div id="txt"></div></div>
 
 				<div class="panel-body">
 					<h2><?php echo $recipe->name; ?></h2>	

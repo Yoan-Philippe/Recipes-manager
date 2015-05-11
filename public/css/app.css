@@ -6231,3 +6231,19 @@ label,
 .checkbox label {
   font-weight: 300;
 }
+.recipesContainer {
+  text-align: center;
+  width: 30%;
+  margin: 5px;
+  padding: 5px;
+  float: left;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+#txt,
+#addIngredient,
+#addRecipe {
+  float: right;
+}
+
+/*# sourceMappingURL=app.css.map */

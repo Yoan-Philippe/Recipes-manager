@@ -5,4 +5,12 @@ $(document).ready(function(){
 	$('#addIngredient').on('click',function(){
 		$('#addIngredientForm').slideToggle();
 	});
+
+	$('#addRecipeForm').hide();
+
+	$('#addRecipe').on('click',function(){
+		$('#addRecipeForm').slideToggle();
+	});
+
+	
 });

@@ -34,8 +34,8 @@
 	<body>
 		<div class="container">
 			<div class="content">
-				<div class="title">You're lost ?</div>
-				<a href="/">Back to home page.</a>
+				<div class="title">U got a prob brah ?</div>
+				<a href="/">Back to home nigga.</a>
 			</div>
 		</div>
 	</body>
