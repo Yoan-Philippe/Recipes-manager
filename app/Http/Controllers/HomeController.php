@@ -47,6 +47,7 @@ class HomeController extends Controller {
 		$momentOfDay = '';
 		$momentOfDayId = 0;
 
+		//Associate the moment of the day depend on the current hour
 		foreach ($moments as $value) {
 			$id = $value->id;
 			$name = $value->name;
@@ -62,41 +63,49 @@ class HomeController extends Controller {
 			}
 		}
 
+		//Get all ingredients and save those who have quantiy zero
+		$ingredients = Ingredient::with('recipes')->get();
+		$arrEmptyIngredients = array();
+		foreach ($ingredients as $key => $value) {
+			if($value->quantity==0)
+			$arrEmptyIngredients[] = $value->id;
+		}
+
+		Session::put('arrEmptyIngredients', $arrEmptyIngredients);
+		//$recipedWithEmptyIngredient = Recipe::with('ingredients')->whereIn( 'ingredient_id', $arrEmptyIngredients)->get();
+
+		//Get all recipes object with some empty ingredients
+		$recipedWithEmptyIngredient = Recipe::whereHas('ingredients', function($q)
+		{
+		    $q->whereIn('ingredient_id', Session::get('arrEmptyIngredients'));
+
+		})->get();
+
+		//Get All Ids of recipes with some empty ingredients
+		$arrIdsRecipesWithEmptyIngredient = array();
+		foreach ($recipedWithEmptyIngredient as $key => $value) {
+			$arrIdsRecipesWithEmptyIngredient[] = $value->id;
+		}
+
+		Session::put('arrIdsRecipesWithEmptyIngredient', $arrIdsRecipesWithEmptyIngredient);
 		//Si la variable de session id du moment existe
 		if (Session::has('momentOfDayId'))
 		{
+			//Get all recipes that have no ingredients with quantity zero
 		    $recipes = Recipe::whereHas('moments', function($q)
 		    {
-		        $q->where('moment_id', '=', Session::get('momentOfDayId'));
+		        $q->where('moment_id', '=', Session::get('momentOfDayId'))->whereNotIn('recipe_id', Session::get('arrIdsRecipesWithEmptyIngredient'));
 
 		    })->get();
-
-		    $arrIngredients = array();
-		    //foreach ($recipes as $key => $value) {
-		    	$ingredients = Ingredient::whereHas('recipes', function($q)
-		    	{
-		    	    $q->where('recipe_id', '=', 6);
-
-		    	})->get();
-
-		    	$nbrIngredients = Ingredient::whereHas('recipes', function($q)
-		    	{
-		    	    $q->where('recipe_id', '=', 6);
-
-		    	})->count();
-
-		    	foreach ($ingredients as $key => $value) {
-		    		if($value->quantity!=0)
-		    		$arrIngredients[] = $value->name . $value->quantity;
-		    	}
-		    	//if(count($arrIngredients)<$nbrIngredients)
-		    //}
 		}
 		//Sinon va chercher toutes les recettes
 		else
 		{
 			$recipes = Recipe::all();
 		}
+
+		//Clear all session variables
+		Session::flush();
 
 		return view('home')->with('momentOfDay',$momentOfDay)->with('recipes',$recipes);
 	}
