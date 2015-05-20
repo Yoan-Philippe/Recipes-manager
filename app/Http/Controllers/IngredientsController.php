@@ -57,24 +57,34 @@ class IngredientsController extends Controller {
 			$ingredient->save();
 
 			Session::flash('added', 'Un nouvel ingrédient vient d\'être ajouté.');
-			return redirect('ingredients');
+			return redirect('/');
 		}
 		else
 		{
-			return redirect('ingredients');
+			return redirect('/');
 		}
 	}
 
 	public function showEdit($id)
 	{
 		$ingredient = Ingredient::find($id);
-		$ingredientCategories = IngredientCategory::all();
-		$recipes = Recipe::all();
 
-		$relatedIds = $ingredient->recipes()->getRelatedIds();
+		if($ingredient!=null)
+		{
+			$ingredientCategories = IngredientCategory::all();
+			$recipes = Recipe::all();
 
-		return view('Ingredients.edit')->with('ingredient',$ingredient)->with('ingredientCategories',$ingredientCategories)
-			->with('recipes',$recipes)->with('relatedIds',$relatedIds);
+			$relatedIds = $ingredient->recipes()->getRelatedIds();
+
+			return view('Ingredients.edit')->with('ingredient',$ingredient)->with('ingredientCategories',$ingredientCategories)
+				->with('recipes',$recipes)->with('relatedIds',$relatedIds);
+		}
+		else
+		{
+			return redirect('got_prob?');
+		}
+
+		
 	}
 
 	public function edit()
@@ -105,10 +115,10 @@ class IngredientsController extends Controller {
 			$ingredient->save();
 
 			Session::flash('edited', 'Cet ingrédient a bien été enregistré.');
-			return redirect('ingredients');
+			return redirect('/');
 		}
 		else{
-			return redirect('ingredients');
+			return redirect('/');
 		}   
 	}
 

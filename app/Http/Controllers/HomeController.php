@@ -3,6 +3,7 @@
 use Carbon\Carbon;
 use App\Moment;
 use App\Recipe;
+use App\IngredientCategory;
 use App\Ingredient;
 use Session;
 
@@ -74,6 +75,7 @@ class HomeController extends Controller {
 		Session::put('arrEmptyIngredients', $arrEmptyIngredients);
 		//$recipedWithEmptyIngredient = Recipe::with('ingredients')->whereIn( 'ingredient_id', $arrEmptyIngredients)->get();
 
+
 		//Get all recipes object with some empty ingredients
 		$recipedWithEmptyIngredient = Recipe::whereHas('ingredients', function($q)
 		{
@@ -107,7 +109,10 @@ class HomeController extends Controller {
 		//Clear all session variables
 		Session::flush();
 
-		return view('home')->with('momentOfDay',$momentOfDay)->with('recipes',$recipes);
+		$allIngredients = Ingredient::all();
+		$ingredientCategories = IngredientCategory::all();
+
+		return view('home')->with('momentOfDay',$momentOfDay)->with('recipes',$recipes)->with('allIngredients',$allIngredients)->with('ingredientCategories',$ingredientCategories);
 	}
 
 }
