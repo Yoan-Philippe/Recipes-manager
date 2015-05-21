@@ -109,10 +109,13 @@ class HomeController extends Controller {
 		//Clear all session variables
 		Session::flush();
 
+		$allRecipes = Recipe::all();
 		$allIngredients = Ingredient::all();
 		$ingredientCategories = IngredientCategory::all();
 
-		return view('home')->with('momentOfDay',$momentOfDay)->with('recipes',$recipes)->with('allIngredients',$allIngredients)->with('ingredientCategories',$ingredientCategories);
+		return view('home')->with('momentOfDay',$momentOfDay)->with('recipes',$recipes)
+			->with('allIngredients',$allIngredients)->with('ingredientCategories',$ingredientCategories)
+			->with('allRecipes',$allRecipes);
 	}
 
 }

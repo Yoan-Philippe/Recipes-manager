@@ -8,15 +8,41 @@ body, label, .checkbox label {
 }
 
 .recipesContainer{
+	background-image: url('/img/paresseu.jpg');
+	background-size: 100%;
+	background-repeat: no-repeat;
 	text-align: center;
-	width: 30%;
+	width: 32%;
+	height: 200px;
 	margin: 5px;
-	padding: 5px;
 	float: left;  
 	border: 1px solid #ccc;
 	border-radius: 3px;
+	position: relative;
 }
 
+div.titleBanner{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	background-color: #4f4f4f;
+	color: #fff;
+	height: 45px;
+	width: 100%;
+}
+
+div.titleBanner span{
+	top: 30%;
+  	position: relative;
+}
 #txt,#addIngredient,#addRecipe{
 	float: right;
+}
+
+a:link,a:visited{
+	color:#1a1a1a;
+}
+
+a:hover{
+	text-decoration: none;
 }
