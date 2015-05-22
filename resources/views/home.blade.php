@@ -30,7 +30,7 @@
 
 					<?php 
 					foreach ($allRecipes as $key => $value) {
-						$totalTime = $value->prep_time + $value->cook_time;
+						$totalTime = $value->total_time;
 						if($totalTime>60)
 						{
 							$totalTime = round($totalTime/60,2) . 'h';
@@ -38,6 +38,7 @@
 						else
 						$totalTime = $totalTime . 'min';
 						echo '<a href="recipes/' . $value->id . '"><h3>' . $value->name . ' (' . $totalTime . ')</h3></a><a href="recipes/edit/' . $value->id . '">Edit</a> - <a href="recipes/delete/' . $value->id . '">Delete</a></p>';
+						echo '<hr />';
 					} ?>	
 				</div>
 			</div>
@@ -54,6 +55,14 @@
 					foreach ($recipes as $key => $value) { ?>
 						<a class="ideasLink" href="/recipes/{{ $value->id }}">
 							<div class="recipesContainer">
+							<?php 
+							if(file_exists(base_path(). '/public/img/recipes/recipe_' . $value->id . '.jpg'))
+							{ ?>
+								<img class="ficheRecetteHome" src="/img/recipes/recipe_<?php echo $value->id; ?>.jpg" alt="recipes" />
+							<?php }
+							else{ ?>
+								<img class="ficheRecetteHome" src="/img/paresseu.jpg" alt="recipes" />
+							<?php } ?>
 								<!--<img src="" alt="Image de recette" />-->
 								<div class="titleBanner">
 									<span>{{ $value->name }}</span>

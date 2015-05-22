@@ -109,7 +109,8 @@ class HomeController extends Controller {
 		//Clear all session variables
 		Session::flush();
 
-		$allRecipes = Recipe::all();
+		$allRecipes = Recipe::orderBy('total_time')->get();;
+		//$users = User::popular()->women()->orderBy('created_at')->get();
 		$allIngredients = Ingredient::all();
 		$ingredientCategories = IngredientCategory::all();
 

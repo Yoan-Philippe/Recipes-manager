@@ -29,7 +29,7 @@
 
 					<?php 
 					foreach ($recipes as $key => $value) {
-						$totalTime = $value->prep_time + $value->cook_time;
+						$totalTime = $value->total_time;
 						if($totalTime>60)
 						{
 							$totalTime = round($totalTime/60,2) . 'h';

@@ -2,15 +2,35 @@
 
 @section('content')
 <div class="container">
-	<div class="row">
-		<div class="col-md-10 col-md-offset-1">
+	<div class="row" style="margin-left: auto;margin-right: auto;width: 50%;">
+		<div class="col-md-10 col-md-offset-1" style="width:100%;">
 			<div class="panel panel-default">
 				<div class="panel-heading">Edit Recipe <div id="txt"></div></div>
 
 				<div class="panel-body">
 					<h2><?php echo $recipe->name; ?></h2>	
 
-					<form method="post" action="{{ action('RecipesController@edit') }}" accept-charset="UTF-8">
+					<?php 
+					if(file_exists(base_path(). '/public/img/recipes/recipe_' . $recipe->id . '.jpg'))
+					{ ?>
+						<img class="ficheRecette" src="/img/recipes/recipe_<?php echo $recipe->id; ?>.jpg" alt="recipes" />
+					<?php }
+					else{ ?>
+						<img class="ficheRecette" src="/img/paresseu.jpg" alt="recipes" />
+					<?php } ?>
+					
+
+					{!! Form::open(
+					    array(
+					        'action' => 'RecipesController@edit', 
+					        'files' => true)) !!}
+
+					
+						<p>
+					    	{!! Form::label('Image de la recette') !!}
+					    	{!! Form::file('image') !!}
+						</p>
+
 						<input type="hidden" value="<?php echo $recipe->id; ?>" name="id" />
 						<input type="text" value="<?php echo $recipe->name; ?>" name="name" placeholder="Name" /><br/>
 						<input type="text" value="<?php echo $recipe->prep_time; ?>" name="prep_time" placeholder="Preparation time" /><br/>

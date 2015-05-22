@@ -54,11 +54,13 @@ class RecipesController extends Controller {
 		    $name = Request::input('name');
 			$prep_time = Request::input('prep_time');
 			$cook_time = Request::input('cook_time');
+			$total_time = $prep_time + $cook_time;
 			
 			$recipe = new Recipe;
 			$recipe->name = $name;
 			$recipe->prep_time = $prep_time;
 			$recipe->cook_time = $cook_time;
+			$recipe->total_time = $total_time;
 			$recipe->save();
 
 			Session::flash('added', 'Une nouvelle recette vient d\'être ajoutée.');
@@ -103,9 +105,17 @@ class RecipesController extends Controller {
 
 			$recipe->moments()->sync($arrIdChecked);
 
+			$imageName = 'recipe_' . $id . '.' . Request::file('image')->getClientOriginalExtension();
+
+		    Request::file('image')->move(
+		        base_path() . '/public/img/recipes/', $imageName
+		    );
+
+
 			$recipe->name = $name;
 			$recipe->prep_time = $prep_time;
 			$recipe->cook_time = $cook_time;
+			$recipe->image = $imageName;
 			$recipe->save();
 
 			Session::flash('edited', 'Cette recette a bien été enregistrée.');
