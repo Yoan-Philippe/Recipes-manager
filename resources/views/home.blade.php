@@ -45,7 +45,7 @@
 		</div>
 	</div>
 
-	<div class="row" style="float:left; width: 42%;">
+	<div class="row row-home-middle">
 		<div class="col-md-10 col-md-offset-1" style="width: 102%;">
 			<div class="panel panel-default">
 				<div class="panel-heading">Pas d'idée pour le <b><?php echo $momentOfDay; ?></b> ? <div id="txt"></div></div>

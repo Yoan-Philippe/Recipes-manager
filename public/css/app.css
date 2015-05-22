@@ -6230,7 +6230,7 @@ label,
   background-size: 113%;
   background-repeat: no-repeat;
   text-align: center;
-  width: 32%;
+  width: 31%;
   height: 200px;
   margin: 5px;
   float: left;
@@ -6271,6 +6271,24 @@ a:hover {
 }
 .ficheRecetteHome {
   width: 100%;
+}
+div.row-home-middle {
+  float: left;
+  width: 42%;
+  margin-left: 15px;
+}
+@media screen and (min-width: 1753px) {
+  .recipesContainer {
+    width: 32%;
+  }
+  div.row-home-middle {
+    margin-left: 0;
+  }
+}
+@media screen and (min-width: 1577px) {
+  .recipesContainer {
+    width: 32%;
+  }
 }
 
 /*# sourceMappingURL=app.css.map */
