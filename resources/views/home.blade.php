@@ -51,6 +51,9 @@
 				<div class="panel-heading">Pas d'idée pour le <b><?php echo $momentOfDay; ?></b> ? <div id="txt"></div></div>
 
 				<div class="panel-body">
+
+					<div id="sortable">
+
 					<?php
 					foreach ($recipes as $key => $value) { ?>
 						<a class="ideasLink" href="/recipes/{{ $value->id }}">
@@ -70,6 +73,7 @@
 							</div>
 						</a>
 					<?php }	?>
+					</div>
 
 				</div>
 			</div>
@@ -108,6 +112,7 @@
 						</div>
 					</form>	
 
+					
 					<?php
 					foreach ($ingredientCategories as $value) {
 						$idCat = $value->id;
@@ -127,7 +132,10 @@
 
 </div>
 <script src="{{ asset('/js/jquery-1.11.3.js') }}"></script>
-<script src="{{ asset('/js/time.js') }}"></script>
+
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script src="{{ asset('/js/main.js') }}"></script>
+<script src="{{ asset('/js/time.js') }}"></script>
 
 @endsection

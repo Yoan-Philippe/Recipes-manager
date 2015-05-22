@@ -4,6 +4,9 @@ $(document).ready(function(){
 		$('#addRecipeForm').slideToggle();
 	});
 
+	$('#sortable').sortable();
+	$('#sortable').disableSelection();
+
 	/*$('#strIngredientName').focus(function(){
 		$('#strIngredientName').attr('placeholder','Nom');
 		$('#addIngredientContainer').slideToggle();
