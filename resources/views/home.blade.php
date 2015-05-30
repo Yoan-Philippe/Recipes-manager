@@ -50,7 +50,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">Pas d'idée pour le <b><?php echo $momentOfDay; ?></b> ? <div id="txt"></div></div>
 
-				<div class="panel-body">
+				<div class="panel-body" id="panelRecipe">
 
 					<?php
 					foreach ($recipes as $key => $value) { ?>
@@ -71,7 +71,6 @@
 							</div>
 						</a>
 					<?php }	?>
-					</ul>
 
 				</div>
 			</div>

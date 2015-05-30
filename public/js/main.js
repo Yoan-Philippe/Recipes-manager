@@ -101,6 +101,12 @@ $( document ).ajaxSuccess(function( event, xhr, settings ) {
 		function(data,status){
 		    $('#'+idIngredient).find('span').html(data);
 		    canEdit = true;
+
+		    $.post("/home/reloadRecipes/",
+		    {},
+		    function(data,status){
+		        $('#panelRecipe').html(data);
+		    });
 		});
 	});
 });

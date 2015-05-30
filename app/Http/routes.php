@@ -27,6 +27,9 @@ Route::post('ingredients/editQuantity/{value}', 'IngredientsController@editQuant
 Route::get('ingredients/saveQuantity/{value}/{id}', 'IngredientsController@saveQuantity');
 Route::post('ingredients/saveQuantity/{value}/{id}', 'IngredientsController@saveQuantity');
 
+Route::get('home/reloadRecipes', 'HomeController@reloadRecipes');
+Route::post('home/reloadRecipes', 'HomeController@reloadRecipes');
+
 //Route concernant les recettes
 Route::get('/recipes', 'RecipesController@index');
 Route::get('recipes/delete/{id}', 'RecipesController@delete');

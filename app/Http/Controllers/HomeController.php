@@ -119,4 +119,99 @@ class HomeController extends Controller {
 			->with('allRecipes',$allRecipes);
 	}
 
+	public function reloadRecipes(){
+
+		$dateNow = Carbon::now('America/Montreal');
+		$dt = Carbon::parse($dateNow);
+		$currentHour = $dt->hour;
+
+		$moments = Moment::all();
+		$momentOfDay = '';
+		$momentOfDayId = 0;
+
+		//Associate the moment of the day depend on the current hour
+		foreach ($moments as $value) {
+			$id = $value->id;
+			$name = $value->name;
+			$min = $value->min;
+			$max = $value->max;
+
+			if($currentHour>=$min&&$currentHour<=$max)
+			{
+				$momentOfDay = $name;
+				$momentOfDayId = $id;	
+
+				Session::put('momentOfDayId', $momentOfDayId);
+			}
+		}
+		//$recipesWithAllQuantity = Recipe::where('quantity','!=',0);
+
+		//Get all ingredients and save those who have quantiy zero
+		$ingredients = Ingredient::with('recipes')->get();
+		$arrEmptyIngredients = array();
+		foreach ($ingredients as $key => $value) {
+			if($value->quantity==0)
+			$arrEmptyIngredients[] = $value->id;
+		}
+
+		Session::put('arrEmptyIngredients', $arrEmptyIngredients);
+		//$recipedWithEmptyIngredient = Recipe::with('ingredients')->whereIn( 'ingredient_id', $arrEmptyIngredients)->get();
+
+
+		//Get all recipes object with some empty ingredients
+		$recipedWithEmptyIngredient = Recipe::whereHas('ingredients', function($q)
+		{
+		    $q->whereIn('ingredient_id', Session::get('arrEmptyIngredients'));
+
+		})->get();
+
+		//Get All Ids of recipes with some empty ingredients
+		$arrIdsRecipesWithEmptyIngredient = array();
+		foreach ($recipedWithEmptyIngredient as $key => $value) {
+			$arrIdsRecipesWithEmptyIngredient[] = $value->id;
+		}
+
+		Session::put('arrIdsRecipesWithEmptyIngredient', $arrIdsRecipesWithEmptyIngredient);
+		//Si la variable de session id du moment existe
+		if (Session::has('momentOfDayId'))
+		{
+			//Get all recipes that have no ingredients with quantity zero
+		    $recipes = Recipe::whereHas('moments', function($q)
+		    {
+		        $q->where('moment_id', '=', Session::get('momentOfDayId'))->whereNotIn('recipe_id', Session::get('arrIdsRecipesWithEmptyIngredient'));
+
+		    })->get();
+		}
+		//Sinon va chercher toutes les recettes
+		else
+		{
+			$recipes = Recipe::all();
+		}
+
+		//Clear all session variables
+		Session::flush();
+
+		foreach ($recipes as $key => $value) { ?>
+			<a class="ideasLink" href="/recipes/{{ $value->id }}">
+				<div class="recipesContainer">
+				<?php 
+				if(file_exists(base_path(). '/public/img/recipes/recipe_' . $value->id . '.jpg'))
+				{ ?>
+					<img class="ficheRecetteHome" src="/img/recipes/recipe_<?php echo $value->id; ?>.jpg" alt="recipes" />
+				<?php }
+				else{ ?>
+					<img class="ficheRecetteHome" src="/img/paresseu.jpg" alt="recipes" />
+				<?php } ?>
+					<!--<img src="" alt="Image de recette" />-->
+					<div class="titleBanner">
+						<span><?php echo $value->name ?></span>
+					</div>
+				</div>
+			</a>
+		<?php }
+
+		//return json_encode($recipes,true);
+		exit();
+	}
+
 }
