@@ -1,11 +1,59 @@
+var canEdit = true;
 $(document).ready(function(){
 
 	$('#addRecipe').on('click',function(){
 		$('#addRecipeForm').slideToggle();
 	});
 
-	$('#sortable').sortable();
-	$('#sortable').disableSelection();
+	/*$('#sortable').sortable();
+	$('#sortable').disableSelection();*/
+
+	
+	$(".quantityAjax").click(function(){
+
+		if(canEdit==true)
+		{
+			idIngredient = $(this).parent().attr('id');
+			valueQuantity = $(this).text();
+
+		        $.post("/ingredients/editQuantity/" + valueQuantity,
+		        {
+		          value: valueQuantity
+		        },
+		        function(data,status){
+		            $('#'+idIngredient).find('span').html(data);
+		            canEdit = false;
+
+		        });
+		}
+	});
+		
+	/*$('.quantityAjax').on('click',function(){
+
+		idRecipe = $(this).attr('id');
+		value = $(this).text();
+
+		if(canEdit==true)
+		{
+
+			$.ajax({
+		       url : '/ingredients/editQuantity/' + value ,
+		       type : 'get',
+		       async : false,
+		       dataType : 'html', // On désire recevoir du HTML
+		       success : function(code_html, statut){ // code_html contient le HTML renvoyé
+		           $('#'+idRecipe).html(code_html);
+		           canEdit=false;
+		       }
+		    });
+
+		    
+		}
+		
+	});*/
+
+	   
+
 
 	/*$('#strIngredientName').focus(function(){
 		$('#strIngredientName').attr('placeholder','Nom');
@@ -35,4 +83,24 @@ $(document).ready(function(){
 	});*/
 
 	
+});
+
+$( document ).ajaxSuccess(function( event, xhr, settings ) {
+
+	$('.inputQuantity').focus();
+	$('.inputQuantity').on('blur',function(){
+
+		nowQuantity = $(this).val();
+		idIngredient = $(this).parent().parent().attr('id');
+
+		$.post("/ingredients/saveQuantity/" + nowQuantity + '/' + idIngredient,
+		{
+		  value: nowQuantity,
+		  id: idIngredient
+		},
+		function(data,status){
+		    $('#'+idIngredient).find('span').html(data);
+		    canEdit = true;
+		});
+	});
 });

@@ -122,6 +122,27 @@ class IngredientsController extends Controller {
 		}   
 	}
 
+	public function editQuantity($value)
+	{
+		//$ingredient = Ingredient::find($id);
+
+		return '<input name="quantity" style="width:90px" value="' . $value . '" class="inputQuantity" autofocus/>';
+		exit();
+	}
+
+	public function saveQuantity($value,$id)
+	{
+		$idIngredient = str_replace('quantityFor_', '', $id);
+		$ingredient = Ingredient::find($idIngredient);
+		$ingredient->quantity = $value;
+		$ingredient->save();
+		
+		return $value;
+		exit();
+	}
+
+	
+
 	public function delete($id)
 	{
 		$ingredients = Ingredient::find($id);

@@ -4,7 +4,7 @@
 @section('content')
 <div class="container">
 
-	<div class="row" style="width: 33%;float: left;">
+	<div class="row" style="width: 26%;float: left;">
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-default">
 				<div class="panel-heading">Recipes</div>
@@ -52,8 +52,6 @@
 
 				<div class="panel-body">
 
-					<ul id="sortable">
-
 					<?php
 					foreach ($recipes as $key => $value) { ?>
 						<a class="ideasLink" href="/recipes/{{ $value->id }}">
@@ -80,7 +78,7 @@
 		</div>
 	</div>
 
-	<div class="row" style="float: right;width: 33%;">
+	<div class="row" style="float: right;width: 28%;">
 		<div class="col-md-10 col-md-offset-1" style="width:100%;">
 			<div class="panel panel-default">
 				<div class="panel-heading">Mes ingrédients</div>
@@ -120,7 +118,7 @@
 
 						foreach ($allIngredients as $key => $value) {
 							if($value->ingredient_category_id==$idCat)
-							echo '<p>' . $value->name . ' (' . $value->quantity . ') - <a href="ingredients/delete/' . $value->id . '">Delete</a> - <a href="ingredients/edit/' . $value->id . '">Edit</a></p>';
+							echo '<p id="quantityFor_' . $value->id . '">' . $value->name . ' (<span class="quantityAjax">' . $value->quantity . '</span>) - <a href="ingredients/delete/' . $value->id . '">Delete</a> - <a href="ingredients/edit/' . $value->id . '">Edit</a></p>';
 						}
 						echo '<hr />';
 					} ?>
