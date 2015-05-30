@@ -52,7 +52,7 @@
 
 				<div class="panel-body">
 
-					<div id="sortable">
+					<ul id="sortable">
 
 					<?php
 					foreach ($recipes as $key => $value) { ?>
@@ -73,7 +73,7 @@
 							</div>
 						</a>
 					<?php }	?>
-					</div>
+					</ul>
 
 				</div>
 			</div>
