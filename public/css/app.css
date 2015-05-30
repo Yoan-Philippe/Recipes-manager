@@ -6273,16 +6273,13 @@ a:hover {
   width: 100%;
 }
 div.row-home-middle {
-  float: left;
-  width: 42%;
-  margin-left: 15px;
+  width: 37.3%;
+  display: inline-block;
+  margin-left: 0;
 }
 @media screen and (min-width: 1753px) {
   .recipesContainer {
     width: 32%;
-  }
-  div.row-home-middle {
-    margin-left: 0;
   }
 }
 @media screen and (min-width: 1577px) {

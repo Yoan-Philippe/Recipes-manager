@@ -4,7 +4,7 @@
 @section('content')
 <div class="container">
 
-	<div class="row" style="width: 30%;float: left;">
+	<div class="row" style="width: 33%;float: left;">
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-default">
 				<div class="panel-heading">Recipes</div>
@@ -46,7 +46,7 @@
 	</div>
 
 	<div class="row row-home-middle">
-		<div class="col-md-10 col-md-offset-1" style="width: 102%;">
+		<div class="col-md-10 col-md-offset-1" style="width: 100%;">
 			<div class="panel panel-default">
 				<div class="panel-heading">Pas d'idée pour le <b><?php echo $momentOfDay; ?></b> ? <div id="txt"></div></div>
 
@@ -80,8 +80,8 @@
 		</div>
 	</div>
 
-	<div class="row" style="float: right;width: 30%;">
-		<div class="col-md-10 col-md-offset-1" style="width:85%;">
+	<div class="row" style="float: right;width: 33%;">
+		<div class="col-md-10 col-md-offset-1" style="width:100%;">
 			<div class="panel panel-default">
 				<div class="panel-heading">Mes ingrédients</div>
 
