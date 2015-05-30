@@ -105,17 +105,21 @@ class RecipesController extends Controller {
 
 			$recipe->moments()->sync($arrIdChecked);
 
-			$imageName = 'recipe_' . $id . '.' . Request::file('image')->getClientOriginalExtension();
+			if(Request::file('image')!=null){
+				$imageName = 'recipe_' . $id . '.' . Request::file('image')->getClientOriginalExtension();
 
-		    Request::file('image')->move(
-		        base_path() . '/public/img/recipes/', $imageName
-		    );
+			    Request::file('image')->move(
+			        base_path() . '/public/img/recipes/', $imageName
+			    );
+			    $recipe->image = $imageName;
+			}
+			
 
 
 			$recipe->name = $name;
 			$recipe->prep_time = $prep_time;
 			$recipe->cook_time = $cook_time;
-			$recipe->image = $imageName;
+			
 			$recipe->save();
 
 			Session::flash('edited', 'Cette recette a bien été enregistrée.');

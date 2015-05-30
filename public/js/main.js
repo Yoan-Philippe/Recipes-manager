@@ -5,8 +5,18 @@ $(document).ready(function(){
 		$('#addRecipeForm').slideToggle();
 	});
 
-	/*$('#sortable').sortable();
-	$('#sortable').disableSelection();*/
+	$('.ideasLink').on('mouseenter',function(){
+		$(this).find('.titleBanner').animate({'bottom':'0'});
+
+		
+	});
+
+	$('.ideasLink').on('mouseleave',function(){
+		$(this).find('.titleBanner').animate({'bottom':'-45px'},'fast');
+	});
+
+	$('#sortable').sortable();
+	$('#sortable').disableSelection();
 
 	
 	$(".quantityAjax").click(function(){
@@ -27,37 +37,11 @@ $(document).ready(function(){
 		        });
 		}
 	});
-		
-	/*$('.quantityAjax').on('click',function(){
-
-		idRecipe = $(this).attr('id');
-		value = $(this).text();
-
-		if(canEdit==true)
-		{
-
-			$.ajax({
-		       url : '/ingredients/editQuantity/' + value ,
-		       type : 'get',
-		       async : false,
-		       dataType : 'html', // On désire recevoir du HTML
-		       success : function(code_html, statut){ // code_html contient le HTML renvoyé
-		           $('#'+idRecipe).html(code_html);
-		           canEdit=false;
-		       }
-		    });
-
-		    
-		}
-		
-	});*/
-
-	   
-
-
-	/*$('#strIngredientName').focus(function(){
+	
+	$('#addIngredientContainer').hide();
+	$('#strIngredientName').focus(function(){
 		$('#strIngredientName').attr('placeholder','Nom');
-		$('#addIngredientContainer').slideToggle();
+		$('#addIngredientContainer').slideDown();
 	});
 
 
@@ -72,10 +56,11 @@ $(document).ready(function(){
 	    	if (!containerExcept.is(e.target) // if the target of the click isn't the container...
 	    	    && containerExcept.has(e.target).length === 0) // ... nor a descendant of the container
 	    	{
-	        	container.hide(); 
+	        	container.hide();
+	        	$('#strIngredientName').attr('placeholder','Ajouter un ingrédient');
 	        }
 	    }
-	});*/
+	});
 
 	/*$('#strIngredientName').blur(function(){
 		$('#strIngredientName').attr('placeholder','Ajouter un ingrédient');

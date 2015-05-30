@@ -17,6 +17,7 @@
 						<img class="ficheRecette" src="/img/paresseu.jpg" alt="recipes" />
 					<?php } ?>
 					<h2>{{ $recipe->name }}</h2>
+					<a href="/recipes/edit/{{ $recipe->id }}">Edit</a>
 					<?php 
 						$totalTime = $recipe->total_time;
 						if($totalTime>60)

@@ -52,26 +52,27 @@
 
 				<div class="panel-body" id="panelRecipe">
 
+				<ul id="sortable">
 					<?php
 					foreach ($recipes as $key => $value) { ?>
-						<a class="ideasLink" href="/recipes/{{ $value->id }}">
-							<div class="recipesContainer">
+						<li><a class="ideasLink" href="/recipes/{{ $value->id }}">
 							<?php 
 							if(file_exists(base_path(). '/public/img/recipes/recipe_' . $value->id . '.jpg'))
 							{ ?>
-								<img class="ficheRecetteHome" src="/img/recipes/recipe_<?php echo $value->id; ?>.jpg" alt="recipes" />
+								<div class="recipesContainer" style="background-image: url('/img/recipes/recipe_{{ $value->id }}.jpg'); background-repeat: no-repeat; background-size:100%;">
+								<!--<img class="ficheRecetteHome" src="/img/recipes/recipe_<?php echo $value->id; ?>.jpg" alt="recipes" />-->
 							<?php }
 							else{ ?>
-								<img class="ficheRecetteHome" src="/img/paresseu.jpg" alt="recipes" />
+								<div class="recipesContainer" style="background-image: url('/img/paresseu.jpg'); background-repeat: no-repeat; background-size:100%;">
 							<?php } ?>
 								<!--<img src="" alt="Image de recette" />-->
-								<div class="titleBanner">
-									<span>{{ $value->name }}</span>
+									<div class="titleBanner">
+										<span>{{ $value->name }}</span>
+									</div>
 								</div>
-							</div>
-						</a>
+						</a></li>
 					<?php }	?>
-
+					</ul>
 				</div>
 			</div>
 		</div>
@@ -117,7 +118,7 @@
 
 						foreach ($allIngredients as $key => $value) {
 							if($value->ingredient_category_id==$idCat)
-							echo '<p id="quantityFor_' . $value->id . '">' . $value->name . ' (<span class="quantityAjax">' . $value->quantity . '</span>)<br><a href="ingredients/delete/' . $value->id . '">Delete</a> - <a href="ingredients/edit/' . $value->id . '">Edit</a></p>';
+							echo '<p id="quantityFor_' . $value->id . '"><a href="ingredients/edit/' . $value->id . '">' . $value->name . '</a> (<span class="quantityAjax">' . $value->quantity . '</span>) - <a href="ingredients/delete/' . $value->id . '">[x]</a></p>';
 						}
 						echo '<hr />';
 					} ?>
@@ -132,7 +133,6 @@
 
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<script src="{{ asset('/js/main.js') }}"></script>
 <script src="{{ asset('/js/time.js') }}"></script>
 
 @endsection
