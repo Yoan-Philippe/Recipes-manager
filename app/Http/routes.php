@@ -39,6 +39,8 @@ Route::post('recipes/edit', 'RecipesController@edit');
 Route::get('recipes/add', 'RecipesController@add');
 Route::post('recipes/add', 'RecipesController@add');
 
+Route::get('/shopping_list', 'ShoppingListController@index');
+
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

@@ -6237,6 +6237,7 @@ label,
   border: 1px solid #ccc;
   border-radius: 3px;
   position: relative;
+  overflow: hidden;
 }
 div.titleBanner {
   position: absolute;
@@ -6273,7 +6274,7 @@ a:hover {
   width: 100%;
 }
 div.row-home-middle {
-  width: 49%;
+  width: 49.3%;
   display: inline-block;
   margin-left: 0;
 }

@@ -36,6 +36,7 @@
 				<ul class="nav navbar-nav">
 					<li><a href="{{ url('/recipes') }}">Recipes</a></li>
 					<li><a href="{{ url('/ingredients') }}">Ingredients</a></li>
+					<li><a href="{{ url('/shopping_list') }}">Liste d'épicerie</a></li>
 				</ul>
 
 				<ul class="nav navbar-nav navbar-right">

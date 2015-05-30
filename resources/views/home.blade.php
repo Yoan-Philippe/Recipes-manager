@@ -117,7 +117,7 @@
 
 						foreach ($allIngredients as $key => $value) {
 							if($value->ingredient_category_id==$idCat)
-							echo '<p id="quantityFor_' . $value->id . '">' . $value->name . ' (<span class="quantityAjax">' . $value->quantity . '</span>) - <a href="ingredients/delete/' . $value->id . '">Delete</a> - <a href="ingredients/edit/' . $value->id . '">Edit</a></p>';
+							echo '<p id="quantityFor_' . $value->id . '">' . $value->name . ' (<span class="quantityAjax">' . $value->quantity . '</span>)<br><a href="ingredients/delete/' . $value->id . '">Delete</a> - <a href="ingredients/edit/' . $value->id . '">Edit</a></p>';
 						}
 						echo '<hr />';
 					} ?>
