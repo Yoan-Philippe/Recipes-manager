@@ -20,7 +20,16 @@
 				?>
 
 				<button id="addRecipe">Ajoute une recette !</button>
-				<form id="addRecipeForm" method="post" action="{{ action('RecipesController@add') }}" accept-charset="UTF-8">
+				{!! Form::open(
+				    array(
+				        'action' => 'RecipesController@add', 
+				        'files' => true,
+				        'id'=>'addRecipeForm')) !!}
+					<p>
+				    	{!! Form::label('Image de la recette') !!}
+				    	{!! Form::file('image') !!}
+					</p>
+				<!--<form id="addRecipeForm" method="post" action="{{ action('RecipesController@add') }}" accept-charset="UTF-8">-->
 					<input type="text" name="name" placeholder="Nom" />
 					<input type="text" name="prep_time" placeholder="Temps de préparation" />
 					<input type="text" name="cook_time" placeholder="Temps de cuisson" />

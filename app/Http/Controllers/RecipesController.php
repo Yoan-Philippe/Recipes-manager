@@ -4,6 +4,7 @@ use App\Recipe;
 use App\Ingredient;
 use App\Moment;
 use Request;
+use Auth;
 use Session;
 
 class RecipesController extends Controller {
@@ -49,6 +50,7 @@ class RecipesController extends Controller {
 
 	public function add()
 	{
+		$authId = Auth::id();
 		if (Request::has('name'))
 		{
 		    $name = Request::input('name');
@@ -57,10 +59,24 @@ class RecipesController extends Controller {
 			$total_time = $prep_time + $cook_time;
 			
 			$recipe = new Recipe;
+
+			$lastRecipe = Recipe::orderBy('id', 'desc')->first();
+			$lastRecipeId = $lastRecipe->id;
+
+			if(Request::file('image')!=null){
+				$imageName = 'recipe_' . ($lastRecipeId+1) . '.' . Request::file('image')->getClientOriginalExtension();
+
+			    Request::file('image')->move(
+			        base_path() . '/public/img/recipes/', $imageName
+			    );
+			    $recipe->image = $imageName;
+			}
+
 			$recipe->name = $name;
 			$recipe->prep_time = $prep_time;
 			$recipe->cook_time = $cook_time;
 			$recipe->total_time = $total_time;
+			$recipe->user_id = $authId;
 			$recipe->save();
 
 			Session::flash('added', 'Une nouvelle recette vient d\'être ajoutée.');

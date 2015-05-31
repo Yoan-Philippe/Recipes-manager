@@ -6,6 +6,7 @@ use App\Recipe;
 use App\IngredientCategory;
 use App\Ingredient;
 use Session;
+use Auth;
 
 
 
@@ -47,6 +48,8 @@ class HomeController extends Controller {
 		$moments = Moment::all();
 		$momentOfDay = '';
 		$momentOfDayId = 0;
+		$authId = Auth::id();
+		Session::put('idUser', $authId);
 
 		//Associate the moment of the day depend on the current hour
 		foreach ($moments as $value) {
@@ -96,7 +99,16 @@ class HomeController extends Controller {
 			//Get all recipes that have no ingredients with quantity zero
 		    $recipes = Recipe::whereHas('moments', function($q)
 		    {
-		        $q->where('moment_id', '=', Session::get('momentOfDayId'))->whereNotIn('recipe_id', Session::get('arrIdsRecipesWithEmptyIngredient'));
+		        $q->where('moment_id', '=', Session::get('momentOfDayId'))->whereNotIn('recipe_id', Session::get('arrIdsRecipesWithEmptyIngredient'))
+		        ->where('user_id', '=', Session::get('idUser'));
+
+		    })->get();
+
+		    //Get all recipes that have no ingredients with quantity zero
+		    $globalRecipes = Recipe::whereHas('moments', function($q)
+		    {
+		        $q->where('moment_id', '=', Session::get('momentOfDayId'))->whereNotIn('recipe_id', Session::get('arrIdsRecipesWithEmptyIngredient'))
+		        ->where('user_id', '=', 0);
 
 		    })->get();
 		}
@@ -116,7 +128,7 @@ class HomeController extends Controller {
 
 		return view('home')->with('momentOfDay',$momentOfDay)->with('recipes',$recipes)
 			->with('allIngredients',$allIngredients)->with('ingredientCategories',$ingredientCategories)
-			->with('allRecipes',$allRecipes);
+			->with('allRecipes',$allRecipes)->with('globalRecipes',$globalRecipes);
 	}
 
 	public function reloadRecipes(){
@@ -128,6 +140,7 @@ class HomeController extends Controller {
 		$moments = Moment::all();
 		$momentOfDay = '';
 		$momentOfDayId = 0;
+		$authId = Auth::id();
 
 		//Associate the moment of the day depend on the current hour
 		foreach ($moments as $value) {

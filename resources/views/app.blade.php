@@ -36,12 +36,18 @@
 			</div>
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<?php
+			if (Auth::check()){ ?>
 				<ul class="nav navbar-nav">
 					<li><a href="{{ url('/recipes') }}">Recipes</a></li>
 					<li><a href="{{ url('/ingredients') }}">Ingredients</a></li>
 					<li><a href="{{ url('/shopping_list') }}">Liste d'épicerie</a></li>
 				</ul>
-
+			<?php }
+			else{
+				echo '<p>Bienvenue</p>';
+			}
+			?>
 				<ul class="nav navbar-nav navbar-right">
 					@if (Auth::guest())
 						<li><a href="{{ url('/auth/login') }}">Login</a></li>

@@ -6,6 +6,11 @@ class Recipe extends Model {
 
 	protected $table = 'recipes';
 
+	public function users()
+    {
+        return $this->belongsTo('App\User');
+    }
+
 	public function ingredients()
 	{
 		return $this->belongsToMany('App\Ingredient','ingredient_recipe','recipe_id','ingredient_id');

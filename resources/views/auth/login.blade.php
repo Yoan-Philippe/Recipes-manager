@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="container-fluid">
-	<div class="row">
-		<div class="col-md-8 col-md-offset-2">
+	<div class="row" style="margin-left:auto;margin-right:auto;width:35%;">
+		<div class="col-md-8 col-md-offset-2" style="width:100%;">
 			<div class="panel panel-default">
 				<div class="panel-heading">Login</div>
 				<div class="panel-body">

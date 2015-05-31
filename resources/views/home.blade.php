@@ -52,6 +52,7 @@
 
 				<div class="panel-body" id="panelRecipe">
 
+				<h3>Vos recettes</h3>
 				<ul class="sortable">
 					<?php
 					foreach ($recipes as $key => $value) { ?>
@@ -73,6 +74,33 @@
 						</a></li>
 					<?php }	?>
 					</ul>
+
+					
+				</div>
+
+				<div class="panel-body" id="panelRecipe">
+					<h3>Recettes générales</h3>
+					<ul class="sortable">
+						<?php
+						foreach ($globalRecipes as $key => $value) { ?>
+							<li><a class="ideasLink" href="/recipes/{{ $value->id }}">
+								<?php 
+								if(file_exists(base_path(). '/public/img/recipes/recipe_' . $value->id . '.jpg'))
+								{ ?>
+									<div class="recipesContainer" style="background-image: url('/img/recipes/recipe_{{ $value->id }}.jpg'); background-repeat: no-repeat; background-size:100%;">
+									<!--<img class="ficheRecetteHome" src="/img/recipes/recipe_<?php echo $value->id; ?>.jpg" alt="recipes" />-->
+								<?php }
+								else{ ?>
+									<div class="recipesContainer" style="background-image: url('/img/paresseu.jpg'); background-repeat: no-repeat; background-size:100%;">
+								<?php } ?>
+									<!--<img src="" alt="Image de recette" />-->
+										<div class="titleBanner">
+											<span>{{ $value->name }}</span>
+										</div>
+									</div>
+							</a></li>
+						<?php }	?>
+						</ul>
 				</div>
 			</div>
 		</div>
