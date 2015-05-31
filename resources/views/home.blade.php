@@ -52,7 +52,7 @@
 
 				<div class="panel-body" id="panelRecipe">
 
-				<ul id="sortable">
+				<ul class="sortable">
 					<?php
 					foreach ($recipes as $key => $value) { ?>
 						<li><a class="ideasLink" href="/recipes/{{ $value->id }}">

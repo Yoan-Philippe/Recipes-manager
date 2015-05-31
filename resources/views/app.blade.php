@@ -19,7 +19,10 @@
 		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
 </head>
-<body onload="startTime()">
+<?php
+	$nbrBgNumber = rand (1,9);
+?>
+<body onload="startTime()" style="background-image: url('/img/background/bg_<?php echo $nbrBgNumber; ?>.jpg'); background-size: 100%; background-repeat: no-repeat;">
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<div class="navbar-header">

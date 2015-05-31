@@ -7,9 +7,14 @@ body, label, .checkbox label {
 	font-weight: 300;
 }
 
-body{
-	background: url('/img/bg_recipes.jpg') no-repeat;
-	background-size: 100%;
+.navbar-default{
+	font-size: 1.4em;
+	padding-top: 10px;
+	height: 70px;
+}
+
+.container-fluid{
+	padding-left:25px;
 }
 
 .panel{
@@ -24,16 +29,33 @@ body{
 	font-size: 1.5em;
 }
 
-#sortable li{
+.sortable li{
 	text-align: center;
-	width: 31%;
-	height: 200px;
+	width: 48.7%;
+	height: 275px;
 	margin: 5px;
 	float: left;  
 	border: 1px solid #ccc;
 	border-radius: 3px;
 	position: relative;
 	overflow: hidden;
+}
+
+.recipesLinkContainer{
+	text-align: center;
+	width: 48.7%;
+	height: 275px;
+	margin: 5px;
+	float: left;  
+	border: 1px solid #ccc;
+	border-radius: 3px;
+	position: relative;
+	overflow: hidden;
+}
+
+.sortable li.recipesLi{
+	width: 32.3%;
+	height: 227px;
 }
 
 div.recipesContainer{
@@ -84,11 +106,17 @@ div.row-home-middle{
 	margin-left: 0;
 }
 
-#sortable{
+div.row-recipes, div.row-ingredients{
+	width: 60%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.sortable{
 	padding: 0;
 }
 
-#sortable li{
+.sortable li{
 	list-style: none;
 }
 

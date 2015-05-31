@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="container">
-	<div class="row">
-		<div class="col-md-10 col-md-offset-1">
+	<div class="row row-recipes">
+		<div class="col-md-10 col-md-offset-1" style="width: 100%;">
 			<div class="panel panel-default">
 				<div class="panel-heading">Recipes <div id="txt"></div></div>
 
@@ -27,8 +27,34 @@
 					<input type="submit" name="btSubmit" value="Ajouter" />
 				</form>
 
+				<ul class="sortable">
+				<?php
+				foreach ($recipes as $key => $value) { ?>
+					<li class="recipesLi">
+						<a class="ideasLink" href="/recipes/{{ $value->id }}">
+						<?php 
+						if(file_exists(base_path(). '/public/img/recipes/recipe_' . $value->id . '.jpg'))
+						{ ?>
+							<div class="recipesContainer" style="background-image: url('/img/recipes/recipe_{{ $value->id }}.jpg'); background-repeat: no-repeat; background-size:100%;">
+							<!--<img class="ficheRecetteHome" src="/img/recipes/recipe_<?php echo $value->id; ?>.jpg" alt="recipes" />-->
+						<?php }
+						else{ ?>
+							<div class="recipesContainer" style="background-image: url('/img/paresseu.jpg'); background-repeat: no-repeat; background-size:100%;">
+						<?php } ?>
+							<!--<img src="" alt="Image de recette" />-->
+								<div class="titleBanner">
+									<span>{{ $value->name }}</span>
+								</div>
+							</div>
+						</a>
+					</li>
+				<?php }	?>
+				</ul>
+
+				<!--<a href="recipes/edit/{{ $value->id }}">Edit</a> - <a href="recipes/delete/{{ $value->id }}">Delete</a>-->
+
 					<?php 
-					foreach ($recipes as $key => $value) {
+					/*foreach ($recipes as $key => $value) {
 						$totalTime = $value->total_time;
 						if($totalTime>60)
 						{
@@ -37,7 +63,7 @@
 						else
 						$totalTime = $totalTime . 'min';
 						echo '<a href="recipes/' . $value->id . '"><h3>' . $value->name . ' (' . $totalTime . ')</h3></a><a href="recipes/edit/' . $value->id . '">Edit</a> - <a href="recipes/delete/' . $value->id . '">Delete</a></p>';
-					} ?>	
+					}*/ ?>	
 				</div>
 			</div>
 		</div>
@@ -45,5 +71,4 @@
 </div>
 <script src="{{ asset('/js/jquery-1.11.3.js') }}"></script>
 <script src="{{ asset('/js/time.js') }}"></script>
-<script src="{{ asset('/js/main.js') }}"></script>
 @endsection

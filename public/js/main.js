@@ -15,8 +15,8 @@ $(document).ready(function(){
 		$(this).find('.titleBanner').animate({'bottom':'-45px'},'fast');
 	});
 
-	$('#sortable').sortable();
-	$('#sortable').disableSelection();
+	$('.sortable').sortable();
+	$('.sortable').disableSelection();
 
 	
 	$(".quantityAjax").click(function(){
