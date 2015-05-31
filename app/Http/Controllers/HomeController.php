@@ -191,26 +191,30 @@ class HomeController extends Controller {
 		//Clear all session variables
 		Session::flush();
 
-		foreach ($recipes as $key => $value) { ?>
-			<a class="ideasLink" href="/recipes/{{ $value->id }}">
-				<div class="recipesContainer">
-				<?php 
-				if(file_exists(base_path(). '/public/img/recipes/recipe_' . $value->id . '.jpg'))
-				{ ?>
-					<img class="ficheRecetteHome" src="/img/recipes/recipe_<?php echo $value->id; ?>.jpg" alt="recipes" />
-				<?php }
-				else{ ?>
-					<img class="ficheRecetteHome" src="/img/paresseu.jpg" alt="recipes" />
-				<?php } ?>
-					<!--<img src="" alt="Image de recette" />-->
-					<div class="titleBanner">
-						<span><?php echo $value->name ?></span>
-					</div>
-				</div>
-			</a>
-		<?php }
+		?>
+		<ul class="sortable">
+			<?php
+			foreach ($recipes as $key => $value) { ?>
+				<li><a class="ideasLink" href="/recipes/<?php echo $value->id ?>">
+					<?php 
+					if(file_exists(base_path(). '/public/img/recipes/recipe_' . $value->id . '.jpg'))
+					{ ?>
+						<div class="recipesContainer" style="background-image: url('/img/recipes/recipe_<?php echo $value->id ?>.jpg'); background-repeat: no-repeat; background-size:100%;">
+						<!--<img class="ficheRecetteHome" src="/img/recipes/recipe_<?php echo $value->id; ?>.jpg" alt="recipes" />-->
+					<?php }
+					else{ ?>
+						<div class="recipesContainer" style="background-image: url('/img/paresseu.jpg'); background-repeat: no-repeat; background-size:100%;">
+					<?php } ?>
+						<!--<img src="" alt="Image de recette" />-->
+							<div class="titleBanner">
+								<span><?php echo $value->name ?></span>
+							</div>
+						</div>
+				</a></li>
+			<?php }	?>
+			</ul>
 
-		//return json_encode($recipes,true);
+			<?php
 		exit();
 	}
 
