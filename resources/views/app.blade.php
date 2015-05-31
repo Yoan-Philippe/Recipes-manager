@@ -32,7 +32,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="{{ url('/') }}">Recipes Manager</a>
+				<a style="margin-top: -26px;margin-left: -25px;" class="navbar-brand" href="{{ url('/') }}"><img src="/img/logo.jpg" width="140" /></a>
 			</div>
 
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">

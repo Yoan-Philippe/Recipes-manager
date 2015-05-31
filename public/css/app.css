@@ -6229,6 +6229,7 @@ label,
   font-size: 1.4em;
   padding-top: 10px;
   height: 70px;
+  z-index: 10;
 }
 .container-fluid {
   padding-left: 25px;
@@ -6309,7 +6310,7 @@ a:hover {
 div.row-home-middle {
   width: 49.3%;
   display: inline-block;
-  margin-left: 0;
+  margin-left: 24%;
 }
 div.row-recipes,
 div.row-ingredients {

@@ -4,7 +4,7 @@
 @section('content')
 <div class="container">
 
-	<div class="row" style="width: 26%;float: left;">
+	<!--<div class="row" style="width: 26%;float: left;">
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-default">
 				<div class="panel-heading">Recipes</div>
@@ -43,7 +43,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div>-->
 
 	<div class="row row-home-middle">
 		<div class="col-md-10 col-md-offset-1" style="width: 100%;">
