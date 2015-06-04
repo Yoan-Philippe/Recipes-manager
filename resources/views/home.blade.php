@@ -50,7 +50,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">Pas d'idée pour le <b><?php echo $momentOfDay; ?></b> ? <div id="txt"></div></div>
 
-				<div class="panel-body" id="panelRecipe">
+				<div class="panel-body">
 
 				<h3>Vos recettes</h3>
 				<ul class="sortable">
@@ -78,29 +78,34 @@
 					
 				</div>
 
-				<div class="panel-body" id="panelRecipe">
+				<div class="panel-body">
 					<h3>Recettes générales</h3>
-					<ul class="sortable">
-						<?php
-						foreach ($globalRecipes as $key => $value) { ?>
-							<li><a class="ideasLink" href="/recipes/{{ $value->id }}">
-								<?php 
-								if(file_exists(base_path(). '/public/img/recipes/recipe_' . $value->id . '.jpg'))
-								{ ?>
-									<div class="recipesContainer" style="background-image: url('/img/recipes/recipe_{{ $value->id }}.jpg'); background-repeat: no-repeat; background-size:100%;">
-									<!--<img class="ficheRecetteHome" src="/img/recipes/recipe_<?php echo $value->id; ?>.jpg" alt="recipes" />-->
-								<?php }
-								else{ ?>
-									<div class="recipesContainer" style="background-image: url('/img/paresseu.jpg'); background-repeat: no-repeat; background-size:100%;">
-								<?php } ?>
-									<!--<img src="" alt="Image de recette" />-->
-										<div class="titleBanner">
-											<span>{{ $value->name }}</span>
+					<?php 
+					if(count($globalRecipes)==0)
+						echo '<p>Aucune recette de disponible</p>';
+					else{ ?>
+						<ul class="sortable">
+							<?php
+							foreach ($globalRecipes as $key => $value) { ?>
+								<li><a class="ideasLink" href="/recipes/{{ $value->id }}">
+									<?php 
+									if(file_exists(base_path(). '/public/img/recipes/recipe_' . $value->id . '.jpg'))
+									{ ?>
+										<div class="recipesContainer" style="background-image: url('/img/recipes/recipe_{{ $value->id }}.jpg'); background-repeat: no-repeat; background-size:100%;">
+										<!--<img class="ficheRecetteHome" src="/img/recipes/recipe_<?php echo $value->id; ?>.jpg" alt="recipes" />-->
+									<?php }
+									else{ ?>
+										<div class="recipesContainer" style="background-image: url('/img/paresseu.jpg'); background-repeat: no-repeat; background-size:100%;">
+									<?php } ?>
+										<!--<img src="" alt="Image de recette" />-->
+											<div class="titleBanner">
+												<span>{{ $value->name }}</span>
+											</div>
 										</div>
-									</div>
-							</a></li>
-						<?php }	?>
+								</a></li>
+							<?php }	?>
 						</ul>
+					<?php } ?>
 				</div>
 			</div>
 		</div>

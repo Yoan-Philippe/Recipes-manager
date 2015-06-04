@@ -6245,7 +6245,7 @@ label,
 }
 .sortable li {
   text-align: center;
-  width: 48.7%;
+  width: 47.7%;
   height: 275px;
   margin: 5px;
   float: left;
@@ -6327,6 +6327,9 @@ div.row-ingredients {
 @media screen and (min-width: 1753px) {
   .recipesContainer {
     width: 32%;
+  }
+  .sortable li {
+    width: 48.7%;
   }
 }
 @media screen and (min-width: 1577px) {

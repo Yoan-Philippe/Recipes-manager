@@ -39,7 +39,7 @@ class HomeController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index($test = null)
 	{
 		$dateNow = Carbon::now('America/Montreal');
 		$dt = Carbon::parse($dateNow);
@@ -141,6 +141,8 @@ class HomeController extends Controller {
 		$momentOfDay = '';
 		$momentOfDayId = 0;
 		$authId = Auth::id();
+		Session::put('idUser', $authId);
+
 
 		//Associate the moment of the day depend on the current hour
 		foreach ($moments as $value) {
@@ -191,7 +193,16 @@ class HomeController extends Controller {
 			//Get all recipes that have no ingredients with quantity zero
 		    $recipes = Recipe::whereHas('moments', function($q)
 		    {
-		        $q->where('moment_id', '=', Session::get('momentOfDayId'))->whereNotIn('recipe_id', Session::get('arrIdsRecipesWithEmptyIngredient'));
+		        $q->where('moment_id', '=', Session::get('momentOfDayId'))->whereNotIn('recipe_id', Session::get('arrIdsRecipesWithEmptyIngredient'))
+		        ->where('user_id', '=', Session::get('idUser'));
+
+		    })->get();
+
+		    //Get all recipes that have no ingredients with quantity zero
+		    $globalRecipes = Recipe::whereHas('moments', function($q)
+		    {
+		        $q->where('moment_id', '=', Session::get('momentOfDayId'))->whereNotIn('recipe_id', Session::get('arrIdsRecipesWithEmptyIngredient'))
+		        ->where('user_id', '=', 0);
 
 		    })->get();
 		}
@@ -204,29 +215,122 @@ class HomeController extends Controller {
 		//Clear all session variables
 		Session::flush();
 
+		$ingredientCategories = IngredientCategory::all();
+		$allIngredients = Ingredient::all();
 		?>
-		<ul class="sortable">
-			<?php
-			foreach ($recipes as $key => $value) { ?>
-				<li><a class="ideasLink" href="/recipes/<?php echo $value->id ?>">
-					<?php 
-					if(file_exists(base_path(). '/public/img/recipes/recipe_' . $value->id . '.jpg'))
-					{ ?>
-						<div class="recipesContainer" style="background-image: url('/img/recipes/recipe_<?php echo $value->id ?>.jpg'); background-repeat: no-repeat; background-size:100%;">
-						<!--<img class="ficheRecetteHome" src="/img/recipes/recipe_<?php echo $value->id; ?>.jpg" alt="recipes" />-->
-					<?php }
-					else{ ?>
-						<div class="recipesContainer" style="background-image: url('/img/paresseu.jpg'); background-repeat: no-repeat; background-size:100%;">
-					<?php } ?>
-						<!--<img src="" alt="Image de recette" />-->
-							<div class="titleBanner">
-								<span><?php echo $value->name ?></span>
-							</div>
-						</div>
-				</a></li>
-			<?php }	?>
-			</ul>
 
+		<div class="row row-home-middle">
+			<div class="col-md-10 col-md-offset-1" style="width: 100%;">
+				<div class="panel panel-default">
+					<div class="panel-heading">Pas d'idée pour le <b><?php echo $momentOfDay; ?></b> ? <div id="txt"></div></div>
+
+					<div class="panel-body">
+
+					<h3>Vos recettes</h3>
+					<ul class="sortable">
+						<?php
+						foreach ($recipes as $key => $value) { ?>
+							<li><a class="ideasLink" href="/recipes/<?php echo $value->id ?>">
+								<?php 
+								if(file_exists(base_path(). '/public/img/recipes/recipe_' . $value->id . '.jpg'))
+								{ ?>
+									<div class="recipesContainer" style="background-image: url('/img/recipes/recipe_<?php echo $value->id ?>.jpg'); background-repeat: no-repeat; background-size:100%;">
+									<!--<img class="ficheRecetteHome" src="/img/recipes/recipe_<?php echo $value->id; ?>.jpg" alt="recipes" />-->
+								<?php }
+								else{ ?>
+									<div class="recipesContainer" style="background-image: url('/img/paresseu.jpg'); background-repeat: no-repeat; background-size:100%;">
+								<?php } ?>
+									<!--<img src="" alt="Image de recette" />-->
+										<div class="titleBanner">
+											<span><?php echo $value->name ?></span>
+										</div>
+									</div>
+							</a></li>
+						<?php }	?>
+						</ul>						
+					</div>
+
+					<div class="panel-body">
+						<h3>Recettes générales</h3>
+						<?php 
+						if(count($globalRecipes)==0)
+							echo '<p>Aucune recette de disponible</p>';
+						else{ ?>
+							<ul class="sortable">
+								<?php
+								foreach ($globalRecipes as $key => $value) { ?>
+									<li><a class="ideasLink" href="/recipes/<?php echo $value->id ?>">
+										<?php 
+										if(file_exists(base_path(). '/public/img/recipes/recipe_' . $value->id . '.jpg'))
+										{ ?>
+											<div class="recipesContainer" style="background-image: url('/img/recipes/recipe_<?php echo $value->id ?>.jpg'); background-repeat: no-repeat; background-size:100%;">
+											<!--<img class="ficheRecetteHome" src="/img/recipes/recipe_<?php echo $value->id; ?>.jpg" alt="recipes" />-->
+										<?php }
+										else{ ?>
+											<div class="recipesContainer" style="background-image: url('/img/paresseu.jpg'); background-repeat: no-repeat; background-size:100%;">
+										<?php } ?>
+											<!--<img src="" alt="Image de recette" />-->
+												<div class="titleBanner">
+													<span><?php echo $value->name ?></span>
+												</div>
+											</div>
+									</a></li>
+								<?php }	?>
+							</ul>
+						<?php } ?>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row" style="float: right;width: 28%;">
+			<div class="col-md-10 col-md-offset-1" style="width:100%;">
+				<div class="panel panel-default">
+					<div class="panel-heading">Mes ingrédients</div>
+
+					<div class="panel-body">
+						<?php
+						if (Session::has('added'))
+						echo '<p style="color:green;">' . Session::get('added') . '</p>';
+
+						if (Session::has('deleted'))
+						echo '<p style="color:red;">' . Session::get('deleted') . '</p>';
+
+						if (Session::has('edited'))
+						echo '<p style="color:green;">' . Session::get('edited') . '</p>';
+						?>
+						<form id="addIngredientForm" method="post" action="<?php echo action('IngredientsController@add') ?>" accept-charset="UTF-8">
+							<input type="text" name="ingredient" style="border-radius: 4px;width: 48%;border: 1px solid #ccc;height: 38px;padding-left: 10px;" id="strIngredientName" placeholder="Ajouter un ingrédient" />
+							<div id="addIngredientContainer" style="float:right">
+								<input type="text" style="width: 80px;height: 38px;padding-left: 12px;border: 1px solid #ccc;border-radius: 4px;" name="quantity" placeholder="Quantity" />
+								<select name="ingredientCategory" id="ingredientCategory" style="height: 38px;border: 1px solid #ccc;border-radius: 4px;">
+								<?php 
+									foreach ($ingredientCategories as $key => $value) 
+									{
+										echo '<option value="' . $value->id . '">' . $value->name . '</option>';
+									}
+								?>
+								</select>
+								<input type="submit" name="btSubmit" value="Ajouter" style="height: 38px;background-color: #ddd;" />
+							</div>
+						</form>	
+
+						
+						<?php
+						foreach ($ingredientCategories as $value) {
+							$idCat = $value->id;
+							echo '<h3>' . $value->name . '</h3>';
+
+							foreach ($allIngredients as $key => $value) {
+								if($value->ingredient_category_id==$idCat)
+								echo '<p id="quantityFor_' . $value->id . '"><a href="ingredients/edit/' . $value->id . '">' . $value->name . '</a> (<span class="quantityAjax">' . $value->quantity . '</span>) - <a href="ingredients/delete/' . $value->id . '">[x]</a></p>';
+							}
+							echo '<hr />';
+						} ?>
+					</div>
+				</div>
+			</div>
+		</div>
 			<?php
 		exit();
 	}

@@ -47,7 +47,10 @@ class IngredientsController extends Controller {
 		if (Request::has('ingredient'))
 		{
 		    $name = Request::input('ingredient');
-			$quantity = Request::input('quantity');
+
+		    $quantity = (Request::has('quantity')) ? Request::input('quantity') : 0;
+		    //if (!empty(Request::input('quantity'))) '0' : 
+			//$quantity = Request::input('quantity');
 			$catId = Request::input('ingredientCategory');
 			
 			$ingredient = new Ingredient;
@@ -149,7 +152,7 @@ class IngredientsController extends Controller {
 		$ingredients->delete();
 
 		Session::flash('deleted', 'Cette ingrédient vient d\'être supprimé.');
-		return redirect('ingredients');
+		return redirect('/');
 	}
 
 }

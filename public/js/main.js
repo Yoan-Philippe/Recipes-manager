@@ -90,7 +90,8 @@ $( document ).ajaxSuccess(function( event, xhr, settings ) {
 		    $.post("/home/reloadRecipes/",
 		    {},
 		    function(data,status){
-		        $('#panelRecipe').html(data);
+		    	//#panelRecipe
+		        $('.container').html(data);
 		    });
 		});
 	});
