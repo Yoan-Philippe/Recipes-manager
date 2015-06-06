@@ -7,12 +7,14 @@ $(document).ready(function(){
 
 	$('.ideasLink').on('mouseenter',function(){
 		$(this).find('.titleBanner').animate({'bottom':'0'});
+		$(this).find('.recipesContainer').animate({'width':'104%'});
 
 		
 	});
 
 	$('.ideasLink').on('mouseleave',function(){
 		$(this).find('.titleBanner').animate({'bottom':'-45px'},'fast');
+		$(this).find('.recipesContainer').animate({'width':'100%'});
 	});
 
 	$('.sortable').sortable();
@@ -71,6 +73,8 @@ $(document).ready(function(){
 });
 
 $( document ).ajaxSuccess(function( event, xhr, settings ) {
+
+	alert('yo');
 
 	$('.inputQuantity').focus();
 	$('.inputQuantity').on('blur',function(){
